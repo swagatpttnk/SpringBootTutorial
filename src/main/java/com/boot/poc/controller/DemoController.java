@@ -1,9 +1,15 @@
 package com.boot.poc.controller;
 
+import com.boot.poc.excepions.DemoWorldException;
+import com.boot.poc.excepions.ExceptionResponse;
+import com.boot.poc.excepions.UserNotFoundException;
 import com.boot.poc.models.DemoWorldBean;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.Date;
 
 @RestController
 public class DemoController {
@@ -22,4 +28,13 @@ public class DemoController {
     public DemoWorldBean demoPathVariable(@PathVariable String name){
         return new DemoWorldBean(String.format("Path variable demo. Path variable passed:%s",name));
     }
+    @PostMapping(path = "/demo-bean/greetings")
+    public DemoWorldBean demoLocalExceptionHandler(@RequestBody String msg){
+        if(msg.contains("Hi")) {
+            return new DemoWorldBean("There is a greetings for you:"+msg);
+        }else{
+            throw new DemoWorldException("This is specific to the DemoWorld Controller");
+        }
+    }
+
 }

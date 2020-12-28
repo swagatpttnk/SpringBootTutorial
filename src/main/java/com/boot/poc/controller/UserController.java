@@ -1,5 +1,6 @@
 package com.boot.poc.controller;
 
+import com.boot.poc.excepions.UserNotFoundException;
 import com.boot.poc.models.User;
 import com.boot.poc.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,11 @@ public class UserController {
 
     //retrieve single user
     @GetMapping(path = "/users/{id}")
-    public User getUser(@PathVariable int id) {
+    public User getUser(@PathVariable int id) throws UserNotFoundException {
         User user = daoService.findOne(id);
-        /*if (user == null) {
+        if (user == null) {
             throw new UserNotFoundException("Id-" + id);
-        }*/
+        }
         return user;
     }
 
@@ -49,17 +50,20 @@ public class UserController {
 
     //Completely Replace user
     @PutMapping(path = "/users/{id}")
-    public ResponseEntity<Object> updateUser(@RequestBody User user,@PathVariable int id) {
+    public ResponseEntity<Object> updateUser(@RequestBody User user,@PathVariable int id) throws UserNotFoundException {
         User savedUser = daoService.update(id,user);
-        return (savedUser!=null)?ResponseEntity.ok().build():ResponseEntity.notFound().build();
+        if(savedUser==null){
+            throw new UserNotFoundException("Id-" + id);
+        }
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(path = "/users/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable int id) {
+    public ResponseEntity<Object> deleteUser(@PathVariable int id) throws UserNotFoundException {
         User deletedUser = daoService.deleteUser(id);
-        /*if (deletedUser == null) {
+        if (deletedUser == null) {
             throw new UserNotFoundException("Id-" + id);
-        }*/
+        }
         return ResponseEntity.noContent().build();
     }
 }
