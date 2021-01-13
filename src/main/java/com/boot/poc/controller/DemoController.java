@@ -33,7 +33,7 @@ public class DemoController {
         if(msg.contains("Hi")) {
             return new DemoWorldBean("There is a greetings for you:"+msg);
         }else{
-            throw new DemoWorldException("This is specific to the DemoWorld Controller");
+            throw new DemoWorldException("This is exception specific to the DemoWorld Controller");
         }
     }
 
