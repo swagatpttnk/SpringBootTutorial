@@ -1,17 +1,19 @@
 package com.boot.poc.models;
 
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
-@ApiModel(description = "User is entity used for representing an Employee")
-public class User {
+//@JsonFilter("MyHospitalFilter")
+@ApiModel(description = "Patient is entity used for representing an patient")
+public class Patient {
     private Integer id;
 
-    @ApiModelProperty(notes = "name of the user")
+    @ApiModelProperty(notes = "name of the patient")
     @Size(min = 2,max = 10,message = "name should have atleast 2 and max 10 char")
     private String name;
 
@@ -19,9 +21,22 @@ public class User {
     @Past
     private Date birthDate;
 
-    private String region;
+    private String sickness ;
 
-    private String alternatNumber;
+    private String bloodGroup;
+
+    public void setBloodGroup(String bloodGroup){
+         this.bloodGroup=bloodGroup;
+    }
+    public void setSickness(String sickness){
+        this.sickness=sickness;
+    }
+    public String getBloodGroup(){
+        return this.bloodGroup;
+    }
+    public String getSickness(){
+        return this.sickness;
+    }
     public Integer getId() {
         return id;
     }
@@ -45,11 +60,13 @@ public class User {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
-    public User(Integer id, String name, Date birthDate){
+    public Patient(Integer id, String name, Date birthDate,String sickness,String bloodGroup){
         super();
         this.id=id;
         this.name=name;
         this.birthDate=birthDate;
+        this.sickness=sickness;
+        this.bloodGroup=bloodGroup;
     }
     @Override
     public String toString() {
