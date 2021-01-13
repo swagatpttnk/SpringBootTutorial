@@ -4,15 +4,25 @@ import com.boot.poc.excepions.DemoWorldException;
 import com.boot.poc.excepions.ExceptionResponse;
 import com.boot.poc.excepions.UserNotFoundException;
 import com.boot.poc.models.DemoWorldBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
+import java.util.Locale;
 
 @RestController
 public class DemoController {
+
+    private MessageSource messageSource;
+
+    @Autowired
+    public DemoController(MessageSource messageSource){
+        this.messageSource=messageSource;
+    }
     // This is a simple GET request
     @GetMapping(path = "/demos")
     public String demoWorld(){
@@ -35,6 +45,16 @@ public class DemoController {
         }else{
             throw new DemoWorldException("This is exception specific to the DemoWorld Controller");
         }
+    }
+    @PostMapping(path = "/demo-bean/i18/greetings")
+    public DemoWorldBean demoInternationalization(
+            @RequestBody String name,
+            @RequestHeader(name="Accept-Language") Locale locale){
+        Object[] param=new Object[1];param[0]=name;
+        String response=messageSource.getMessage("greetings.msg",param,locale);
+
+        return new DemoWorldBean(response);
+
     }
 
 }
