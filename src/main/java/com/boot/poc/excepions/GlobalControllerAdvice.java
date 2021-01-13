@@ -38,7 +38,7 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
         }
     ResponseEntity<Object> handleDefaultException(Exception uex, WebRequest request){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), uex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
     public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException uex, WebRequest request){
         ExceptionResponse exceptionResponse=new ExceptionResponse(new Date(), uex.getMessage(),request.getDescription(false));
