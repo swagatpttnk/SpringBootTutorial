@@ -17,7 +17,7 @@ import java.util.Locale;
 @RestController
 public class DemoController {
 
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     @Autowired
     public DemoController(MessageSource messageSource){
