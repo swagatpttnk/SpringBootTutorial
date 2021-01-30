@@ -10,6 +10,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 @SpringBootApplication
+//@EnableConfigurationProperties(DBProperties.class) <-- use this if DBProperties is not annotated with @ConfigurationProperties
 public class SpringBootTutorialApplication {
 
 	public static void main(String[] args) {
