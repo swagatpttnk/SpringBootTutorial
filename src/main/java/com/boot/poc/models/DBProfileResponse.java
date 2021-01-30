@@ -11,9 +11,9 @@ import java.util.Map;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class DBProfileResponse {
     public String dbVendor;
+    public String dbVersion;
     public String host;
     public String port;
     public String serviceName;
